@@ -1,3 +1,53 @@
+
+CREATE TABLE godziny (
+    id_godziny int  NOT NULL,
+    data date  NULL,
+    liczba_godzin int  NULL,
+    id_pracownika int  NOT NULL,
+    CONSTRAINT godziny_pk PRIMARY KEY (id_godziny)
+);
+
+CREATE TABLE pensje (
+    id_pensji int  NOT NULL,
+    stanowisko varchar(30)  NULL,
+    kwota int  NULL,
+    id_premii int  NOT NULL,
+    CONSTRAINT pensje_pk PRIMARY KEY (id_pensji)
+);
+
+CREATE TABLE pracownicy (
+    id_pracownika int  NOT NULL,
+    imie varchar(30)  NULL,
+    nazwisko varchar(30)  NULL,
+    adres varchar(50)  NULL,
+    telefon varchar(9)  NULL,
+    CONSTRAINT pracownicy_pk PRIMARY KEY (id_pracownika)
+);
+
+CREATE TABLE premie (
+    id_premii int  NOT NULL,
+    rodzaj varchar(50)  NULL,
+    kwota int  NULL,
+    CONSTRAINT premie_pk PRIMARY KEY (id_premii)
+);
+
+
+
+ALTER TABLE godziny ADD CONSTRAINT godziny_pracownicy
+    FOREIGN KEY (id_pracownika)
+    REFERENCES pracownicy (id_pracownika)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
+
+ALTER TABLE pensje ADD CONSTRAINT pensje_premie
+    FOREIGN KEY (id_premii)
+    REFERENCES premie (id_premii)  
+    NOT DEFERRABLE 
+    INITIALLY IMMEDIATE
+;
+
 insert into Pracownicy values (1,'Jan','Kowalski','Podleśna 22/22 Gliwice','777666555')
 
 insert into Pracownicy values (2,'Stefan','Siarzewski',' Głowna 16/12 Warszawa','777666555')
