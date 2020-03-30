@@ -1,0 +1,52 @@
+insert into Pracownicy values (1,'Jan','Kowalski','Podleśna 22/22 Gliwice','777666555')
+
+insert into Pracownicy values (2,'Stefan','Siarzewski',' Głowna 16/12 Warszawa','777666555')
+
+insert into Pracownicy values (3,'Ferdynand','Lipski','Podleśna 9 Warszawa   ','777666555')
+
+insert into Pracownicy values (4,'Jerzy','Kiler','Dzika 102/67   Warszawa','777666555')
+
+insert into Pracownicy values (5,'Franciszek ','Maurer','Okopowa 67/67 Warszawa   ','777666555')
+
+insert into Pracownicy values (6,'Adam','Miauczyński','Świrowa 12/12 Warszawa   ','777666555')
+
+insert into Pracownicy values (7,'Komisarz','Ryba','Policyjna 134/87 Warszawa   ','777666555')
+
+insert into Pracownicy values (8,'Jose Arcadio','Morales',' Hiszpanska 12/12 Port-Au-Prince  ','777666555')
+
+insert into Pracownicy values (9,'Jakub','Brenner','Muzyczna 12/12 Warszawa   ','777666555')
+
+insert into Pracownicy values (10,'Laska','Z Polski','Jeździ na desce i pali blanty   ','777666555')
+
+insert into Godziny values (1,'01.01.2020',8,1)
+insert into Godziny values (2,'02.01.2020',8,2)
+insert into Godziny values (3,'03.01.2020',8,3)
+insert into Godziny values (4,'04.01.2020',8,4)
+insert into Godziny values (5,'05.01.2020',8,5)
+insert into Godziny values (6,'06.01.2020',8,6)
+insert into Godziny values (7,'07.01.2020',8,7)
+insert into Godziny values (8,'08.01.2020',8,8)
+insert into Godziny values (9,'09.01.2020',8,9)
+insert into Godziny values (10,'10.01.2020',8,10)
+
+insert into Premie values (1,'Za znajomosci',1000)
+insert into Premie values (2,'Za znajomosci',1000)
+insert into Premie values (3,'Za znajomosci',1000)
+insert into Premie values (4,'Za znajomosci',1000)
+insert into Premie values (5,'Za znajomosci',1000)
+insert into Premie values (6,'Za znajomosci',1000)
+insert into Premie values (7,'Za znajomosci',1000)
+insert into Premie values (8,'Za znajomosci',1000)
+insert into Premie values (9,'Za znajomosci',1000)
+insert into Premie values (10,'Za znajomosci',1000)
+
+insert into Pensje (1,'Bramkarz',2200,1)
+insert into Pensje (2,'Prawy obronca  ',2200,2)
+insert into Pensje (3,'Stoper  ',2200,3)
+insert into Pensje (4,'Lewy obronca ',2200,4)
+insert into Pensje (5,' Defensywny pomocnik ',2200,5)
+insert into Pensje (6,' ósemka ',2200,6)
+insert into Pensje (7,' Skrzydłowy ',2200,7)
+insert into Pensje (8,'Skrzydłowy  ',2200,8)
+insert into Pensje (9,' Napadzior ',2200,9)
+insert into Pensje (10,' Ten od przekretow z sedziami ',2200,10)
