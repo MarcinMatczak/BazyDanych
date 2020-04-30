@@ -1,0 +1,54 @@
+   CREATE TABLE pracownicy (
+   id_pracownika VARCHAR(7) PRIMARY KEY,
+	imie VARCHAR(30),
+	nazwisko VARCHAR(30)   
+   );
+
+  CREATE TABLE zabiegi (
+   id_zabiegu VARCHAR(7) PRIMARY KEY,
+	NazwaZabiegu VARCHAR(30)
+   );
+
+INSERT INTO zabiegi ( id_zabiegu, nazwazabiegu)
+VALUES ('Z496', 'Lakowanie'),('Z500', 'Borowanie'),('Z503', 'Usuwanie Kamienia')
+
+
+    CREATE TABLE pacjenci (
+   id_pacjenta VARCHAR(7) PRIMARY KEY,
+	imie VARCHAR(30),
+	nazwisko VARCHAR(30)   
+   );
+    CREATE TABLE wizyty (
+   id_wizyty VARCHAR(7) PRIMARY KEY,
+	id_pracownika VARCHAR(30) REFERENCES pracownicy(id_pracownika),
+	id_pacjenta VARCHAR(30)  REFERENCES pacjenci(id_pacjenta),
+	id_zabiegu VARCHAR(30)  REFERENCES zabiegi(id_zabiegu),	 
+	data_wizyty date
+   );
+
+
+-------------------------------------------------
+    CREATE TABLE produkty (
+   id_produktu VARCHAR(7) PRIMARY KEY,
+	NazwaProduktu VARCHAR(30),
+	CenaNetto VARCHAR(10),
+	Cena VARCHAR(10)	
+   );
+
+
+   CREATE TABLE dostawcy (
+   id_dostawcy VARCHAR(7) PRIMARY KEY,
+	NazwaDostawcy VARCHAR(50),
+	Misato VARCHAR(30),
+	Ulica VARCHAR(30),
+	KodPocztowy VARCHAR(6),
+	Budynek VARCHAR(10),
+	NrLokum VARCHAR(10)
+   );
+
+    CREATE TABLE zamowienia (
+   id_zamowienia VARCHAR(7) PRIMARY KEY,
+	id_dostawcy VARCHAR(7) References dostawcy(id_dostawcy),
+	id_produktu VARCHAR(7) References produkty(id_produktu)
+   );
+
