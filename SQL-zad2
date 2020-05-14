@@ -1,0 +1,123 @@
+create database firma;
+
+create schema ksiegowosc;
+
+create table ksiegowosc.pracownicy
+(
+id_pracownika int primary key,
+imie varchar(30), 
+nazwisko varchar(30),
+adres varchar(100), 
+telefon varchar(11)  
+);
+
+create table ksiegowosc.godziny
+(
+ id_godziny int primary key,
+ data date,
+ liczba_godzin int,
+ id_pracownika int  REFERENCES pracownicy(id_pracownika)
+);
+create table ksiegowosc.pensja
+(
+id_pensji int primary key,
+stanowisko varchar(50),
+kwota int  
+);
+create table ksiegowosc.premia
+(
+id_premii int primary key,
+rodzaj varchar(50),
+ kwota int 
+);
+create table wynagrodzenie
+(
+ id_wynagrodzenia int primary key,
+ data date,
+id_pracownika int REFERENCES pracownicy(id_pracownika),
+ id_godziny int REFERENCES godziny(id_godziny),
+ id_pensji int REFERENCES pensja(id_pensji), 
+id_premii int REFERENCES premia(id_premii)
+);
+
+  insert into pracownicy (id_pracownika, imie, nazwisko, adres, telefon)  values 
+ (1,'Łukasz','Piszczek','Dortmund Niemcy','777777777'), 
+ (2,'Łukasz','Fabiański','Londyn Anglia','777777777'),
+ (3,'Kamil','Glik','Monaco Francja','777777777'),
+ (4,'Jan','Bednarek','Southampton Anglia','777777777'),
+ (5,'Jakub','Wawrzyniak','Katowice Polska','777777777'),
+ (6,'Grzegorz','Krychowiak','Moskwa Rosja','777777777'),
+ (7,'Piotr','Zieliński','Neapol Włochy','777777777'),
+ (8,'Jakub','Błaszczykowski','Kraków Polska','777777777'),
+ (9,'Robert','Lewandowski','Monachium Niemcy','777777777'),
+ (10,'Kamil','Grosicki','Hull Anglia','777777777');
+
+insert into godziny ( id_godziny ,data , liczba_godzin ,id_pracownika) values 
+  (1,'08.02.2020',8,1),
+ (2,'09.02.2020',8,2), 
+ (3,'10.02.2020',8,3), 
+ (4,'11.02.2020',8,4), 
+(5,'12.02.2020',8,5), 
+(6,'08.02.2020',8,6), 
+ (7,'08.02.2020',8,7), 
+ (8,'08.02.2020',8,8), 
+ (9,'08.02.2020',8,9), 
+ (10,'08.02.2020',8,10);
+
+ insert into pensja ( id_pensji ,stanowisko ,kwota) values 
+ (1,'Bramkarz',20000),
+ (2,'Obronca',10000),
+ (3,'Obronca',15000),
+ (4,'Obronca',200),
+ (5,'Obronca',2340),
+ (6,'Pomocnik',1000),
+  (7,'Pomocnik',223400),
+ (8,'Pomocnik',73644),
+ (9,'Napastnik',1000000),
+ (10,'Pomocnik',20000);
+
+ insert into premia( id_premii ,rodzaj ,kwota) values 
+ (1,'Za czyste konto',1111),
+ (2,'Za szmate',1234),
+ (3,'Za przekret',124534),
+ (4,'W sumie za nic',2000),
+ (5,'Za gówno',500),
+ (6,'Za hat-tricka',27422),
+  (7,'Za asyste',2),
+ (8,'Za ladny usmiech',4765),
+ (9,'Od tak se',12134),
+ (10,'Za znajomosci',28454);
+
+ insert into wynagrodzenie( id_wynagrodzenia ,id_pracownika ,id_godziny,id_pensji,id_premii) values 
+ (1,1,1,1,2),
+ (2,2,2,2,1),
+ (3,3,3,3,3),
+ (4,4,4,4,4),
+ (5,5,5,5,5),
+ (6,6,6,6,8),
+  (7,7,7,7,7),
+ (8,8,8,8,10),
+ (9,9,9,9,6),
+ (10,10,10,10,9);
+
+UPDATE wynagrodzenie
+SET data = '01.03.2020'
+WHERE id_wynagrodzenia between 1 and 10;
+
+select id_pracownika, imie from pracownicy;
+select id_pracownika,kwota from wynagrodzenie,pensja where wynagrodzenie.id_pensji = pensja.id_pensji  and pensja.kwota > 1000;
+select wynagrodzenie.id_pracownika from wynagrodzenie, premia,pensja  where premia.kwota is NULL and wynagrodzenie.id_pensji = pensja.id_pensji and wynagrodzenie.id_premii = premia.id_premii  ;
+select * from pracownicy where imie like 'J%';
+select * from pracownicy where imie like '%a' and nazwisko like '%n%';
+select imie, nazwisko, liczba_godzin*22-160 as nadgodziny from pracownicy,godziny where liczba_godzin*22 > 160 and pracownicy.id_pracownika = godziny.id_pracownika ;
+select imie,nazwisko,kwota from pracownicy,wynagrodzenie,pensja where  pensja.kwota between 1500 and 3000 and wynagrodzenie.id_pensji = pensja.id_pensji  and wynagrodzenie.id_pracownika = pracownicy.id_pracownika ;
+select imie, nazwisko from pracownicy,godziny,wynagrodzenie,premia where liczba_godzin*22 > 160 and premia.kwota is NULL 
+and pracownicy.id_pracownika = godziny.id_pracownika and wynagrodzenie.id_pracownika = pracownicy.id_pracownika and wynagrodzenie.id_godziny = godziny.id_godziny and premia.id_premii = wynagrodzenie.id_premii ;
+select imie,nazwisko,pensja.kwota from pracownicy,wynagrodzenie,pensja  where wynagrodzenie.id_pracownika = pracownicy.id_pracownika and pensja.id_pensji = wynagrodzenie.id_pensji order by kwota desc;
+select imie,nazwisko,pensja.kwota as pensja,premia.kwota as premia from pracownicy,wynagrodzenie,pensja,premia  where wynagrodzenie.id_pracownika = pracownicy.id_pracownika and pensja.id_pensji = wynagrodzenie.id_pensji and wynagrodzenie.id_premii = premia.id_premii 
+order by pensja.kwota ,premia.kwota desc ;
+ select count (*) as zliczenia ,stanowisko from pracownicy,pensja,wynagrodzenie where wynagrodzenie.id_pracownika = pracownicy.id_pracownika and pensja.id_pensji = wynagrodzenie.id_pensji  group by stanowisko; 
+  select avg(kwota) as srednia ,min(kwota) as minimum, max(kwota) as maximum from pensja where stanowisko='Obronca' ; 
+  select sum(kwota) as suma_wynagrodzen ,stanowisko from pensja group by stanowisko;
+  select count (*) as ilosc_premii , stanowisko from premia,pensja,wynagrodzenie where wynagrodzenie.id_pensji = pensja.id_pensji and wynagrodzenie.id_premii = premia.id_premii group by stanowisko;
+ 
