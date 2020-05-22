@@ -1,0 +1,20 @@
+ALTER TABLE pracownicy ALTER COLUMN telefon varchar(20)
+UPDATE pracownicy SET telefon=CONCAT('(+48)',telefon) 
+
+UPDATE pracownicy SET telefon = SUBSTRING(telefon, 1, 8) + '-' + SUBSTRING(telefon, 9, 3) + '-' + SUBSTRING(telefon, 12, 3)
+
+select  top 1 id_pracownika,upper(imie),upper(nazwisko),upper(adres),telefon from pracownicy  order by len(nazwisko) desc ;
+
+Select  
+convert(varchar(30), HashBytes('MD5', STR(pracownicy.id_pracownika)),2) as id,
+convert(varchar(30), HashBytes('MD5', imie),2)as imie, 
+convert(varchar(30), HashBytes('MD5', nazwisko),2)as nazwisko,
+convert(varchar(30), HashBytes('MD5', adres),2)as adres,
+convert(varchar(30), HashBytes('MD5', telefon),2)as telefon,
+convert(varchar(30), HashBytes('MD5', STR(kwota)),2)as kwota
+from pracownicy, pensja,wynagrodzenie where pracownicy.id_pracownika = wynagrodzenie.id_wynagrodzenia and pensja.id_pensji = wynagrodzenie.id_pensji
+
+select * from pracownicy 
+LEFT JOIN wynagrodzenie on pracownicy.id_pracownika = wynagrodzenie.id_pracownika 
+LEFT JOIN premia on premia.id_premii = wynagrodzenie.id_premii
+LEFT JOIN pensja on pensja.id_pensji = wynagrodzenie.id_pensji
