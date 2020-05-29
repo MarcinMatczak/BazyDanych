@@ -1,0 +1,18 @@
+
+backup database Firma to disk = 'D:ścieżka'
+drop database Firma
+restore database Firma from disk = 'D:ścieżka'
+
+backup database AdventureWorks2017  to disk = 'D:ścieżka_2'
+select * from AdventureWorks2017.HumanResources.Department
+select * from AdventureWorks2017.HumanResources.Employee
+select * from AdventureWorks2017.HumanResources.EmployeeDepartmentHistory
+
+CREATE VIEW widok as select Employee.LoginID as LoginID,
+  Department.Name as Department
+  from AdventureWorks2017.HumanResources.Employee as Employee,
+  AdventureWorks2017.HumanResources.Department as Department,
+  AdventureWorks2017.HumanResources.EmployeeDepartmentHistory as EmployeeDepartmentHistory
+  where DepHistory.BusinessEntityID = Employee.BusinessEntityID and DepHistory.DepartmentID = Department.DepartmentID
+
+
