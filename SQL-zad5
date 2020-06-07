@@ -1,0 +1,46 @@
+--zad1
+BEGIN 
+	DECLARE @avg money
+	SET @avg = (select AVG(Rate * 168) FROM AdventureWorks2017.HumanResources.EmployeePayHistory)
+	SELECT emplo.* FROM 
+		AdventureWorks2017.HumanResources.EmployeePayHistory as history,
+		AdventureWorks2017.HumanResources.Employee as emplo
+		WHERE history.BusinessEntityID = emplo.BusinessEntityID and (history.Rate * 168) > @avg
+END;
+
+
+--zad2
+CRETAE or ALTER FUNCTION dbo.GetOrderDate ( @starting_value int )
+RETURNS DATETIME
+AS
+BEGIN
+   RETURN (SELECT ShipDate  FROM AdventureWorks2017.Sales.SalesOrderHeader WHERE SalesOrderID = @starting_value);
+
+END;
+
+
+--zad3
+CREATE OR ALTER PROCEDURE IdentifyProduct @nazwa nvarchar(50)
+AS
+SELECT prod.ProductID, prod.ProductNumber, Sum(inv.Quantity) FROM Production.Product AS prod, Production.ProductInventory AS inv 
+	WHERE prod.Name = @nazwa AND inv.ProductID = prod.ProductID GROUP BY prod.ProductID,prod.ProductNumber
+GO
+ 
+
+ --zad4
+ CRETE OR ALTER FUNCTION dbo.FindCreditCard ( @starting_value int )
+ RETURNS NVARCHARr(25)
+ AS
+ BEGIN
+ RETURN(select CardNumber from Sales.CreditCard,Sales.SalesOrderHeader WHERE Sales.CreditCard.CreditCardID = Sales.SalesOrderHeader.CreditCardID
+ AND @starting_value = Sales.SalesOrderHeader.SalesOrderID)
+ END
+
+ --zad5
+CREATE OR ALTER PROCEDURE Dzielenie @liczba1 INT , @liczba2 INT
+AS
+IF (@liczba1)> (@liczba2)  (select (@liczba1 / @liczba2 )) print 'Niewłaściwie zdefiniowałeś dane wejściowe'
+GO
+
+EXEC Dzielenie @liczba1 = 4, @liczba2 = 5
+
