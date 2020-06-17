@@ -1,0 +1,49 @@
+
+create or alter function dbo.Fibonacci(@count int)
+returns @wynik TABLE(wynik int)
+as
+begin
+	declare @a int = 0;
+	declare @b int = 1;
+	declare @i int = 0;
+	while @i < @count
+	begin
+		insert into @wynik values(@b)
+		set @b = @b + @a
+		set @a = @b - @a
+		set @i = @i + 1
+	end
+	return
+end
+
+
+create or alter procedure TrigFib(@count int)
+as
+begin
+	select * from dbo.Fibonacci(@count)
+end
+exec TrigFib 5
+
+
+create trigger MakeNameUpper
+on Person.Person
+after insert
+as
+	declare @id int;
+	select @id = inserted.BusinessEntityID from inserted
+	update Person.Person set LastName = UPPER(LastName) where BusinessEntityID = @id
+
+
+
+create trigger Tax
+on Sales.SalesTaxRate
+after update
+as 
+begin
+declare @tax1 smallmoney
+declare @tax2 smallmoney
+select @tax1 = deleted.TaxRate from deleted
+select @tax2 = inserted.TaxRate from inserted
+if (@tax2-@tax1)/@tax1 > 0.3
+	print 'Error: Zbyt derastyczna zmiana'
+end;
